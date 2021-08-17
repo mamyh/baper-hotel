@@ -9,32 +9,41 @@ const displayWithdrow = document.getElementById('display-withdrow');
 
 const displayBalance = document.getElementById('display-balance');
 
+// common functions 
+function userInput(input, innerText, isAdd) {
+    const getInput = parseFloat(input.value);
+    const myBalance = parseFloat(innerText.innerText);
+
+    //clear the input field
+    input.value = "";
+
+    //update your total balance 
+    if (isAdd) {
+        displayBalance.innerText = parseFloat(displayBalance.innerText) + getInput;
+    } else {
+        displayBalance.innerText = parseFloat(displayBalance.innerText) - getInput;
+    }
+
+    return getInput + myBalance;
+}
+
 // deposite part 
 depositeBtn.addEventListener("click", function (e) {
     e.preventDefault();
     //get and put the deposite
-    const depositeAmount = parseFloat(depositeInput.value);
-    const depositeBalance = parseFloat(displayDeposite.innerText);
-    const deposited = depositeAmount + depositeBalance;
-    displayDeposite.innerText = deposited;
-    //clear the input field
-    depositeInput.value = "";
+
+    displayDeposite.innerText = userInput(depositeInput, displayDeposite, true);
+
 
     //update the balance
-    displayBalance.innerText = parseFloat(displayBalance.innerText) + depositeAmount;
+
 });
 
 //withdrow part 
 withdrowBtn.addEventListener("click", function (e) {
     e.preventDefault();
-    //get and put the deposite
-    const withdrowAmount = parseFloat(withdrowInput.value);
-    const withdrowBalance = parseFloat(displayWithdrow.innerText);
-    const withdrow = withdrowAmount + withdrowBalance;
-    displayWithdrow.innerText = withdrow;
-    //clear the input field
-    withdrowInput.value = "";
 
+    displayWithdrow.innerText = userInput(withdrowInput, displayWithdrow, false);
     //update the balance
     displayBalance.innerText = parseFloat(displayBalance.innerText) - withdrowAmount;
 });
